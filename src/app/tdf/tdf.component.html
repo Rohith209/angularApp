@@ -1,0 +1,137 @@
+<div class="container-fluid my-3">
+    <h1 class="text-center">User Registration - Template Driven Form Demo</h1>
+    <form #formData="ngForm" (ngSubmit)="SubmitForm(formData)">
+        <div class="form-container">
+
+            <div class="row g-3">
+                <div class="col-md-6 form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" #userFirstName="ngModel" id="firstName" class="form-control"
+                        placeholder="First name" aria-label="First name" name="firstName" required minlength="3"
+                        maxlength="5" [(ngModel)]="model.firstName" />
+                    <div class="error-messages"
+                        *ngIf="formData.controls['firstName']?.touched && formData.controls['firstName']?.['errors']">
+                        <p class="text-danger" *ngIf="formData.controls['firstName']?.['errors']?.['required']">
+                            First name cannot be blank
+                        </p>
+                        <p class="text-danger" *ngIf="formData.controls['firstName']?.['errors']?.['minlength']">
+                            First name cannot be less than 3 characters
+                        </p>
+                        <p class="text-danger" *ngIf="formData.controls['firstName']?.['errors']?.['maxlength']">
+                            First name cannot be greater than 5 characters
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" #userLastName="ngModel" id="lastName" class="form-control"
+                        placeholder="Last name" aria-label="Last name" name="lastName" required minlength="3"
+                        maxlength="15" [(ngModel)]="model.lastName"
+                        [class.is-invalid]="userLastName.invalid && userLastName.touched" />
+                    <div class="error-messages"
+                        *ngIf="formData.controls['lastName']?.touched && formData.controls['lastName']?.['errors']">
+                        <p class="text-danger" *ngIf="formData.controls['lastName']?.['errors']?.['required']">
+                            Last name cannot be blank
+                        </p>
+                        <p class="text-danger" *ngIf="formData.controls['lastName']?.['errors']?.['minlength']">
+                            Last name cannot be less than 3 characters
+                        </p>
+                        <p class="text-danger" *ngIf="formData.controls['lastName']?.['errors']?.['maxlength']">
+                            Last name cannot be greater than 15 characters
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="Email"
+                        [class.is-invalid]="userEmail.invalid && userEmail.touched" name="Email" required
+                        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #userEmail="ngModel"
+                        [(ngModel)]="model.email" />
+
+                    <div class="error-messages"
+                        *ngIf="formData.controls['Email']?.touched && formData.controls['Email']?.['errors']">
+                        <p class="text-danger" *ngIf="formData.controls['Email']?.['errors']?.['required']">
+                            Email cannot be blank
+                        </p>
+                        <p class="text-danger" *ngIf="userEmail?.['errors']?.['pattern']">
+                            Email is invalid!
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="Password" class="form-label">Password</label>
+                    <input type="password" #userPwd="ngModel" [class.is-invalid]="userPwd.invalid && userPwd.touched"
+                        required class="form-control" id="Password" name="Password" [(ngModel)]="model.password" />
+                    <div class="error-messages"
+                        *ngIf="formData.controls['Password']?.touched && formData.controls['Password']?.['errors']">
+                        <p class="text-danger" *ngIf="formData.controls['Password']?.['errors']?.['required']">
+                            Password cannot be blank
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="Address1" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="Address1" placeholder="1234 Main St" name="Address1"
+                        #userAdd1="ngModel" [(ngModel)]="model.address1" required
+                        [class.is-invalid]="userAdd1.invalid && userAdd1.touched" />
+                    <div class="error-messages" *ngIf="userAdd1.touched && userAdd1?.['errors']">
+                        <p class="text-danger" *ngIf="userAdd1?.['errors']?.['required']">
+                            Address field cannot be blank
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="Address2" class="form-label">Address 2</label>
+                    <input type="text" class="form-control" id="Address2" placeholder="Apartment, studio, or floor"
+                        name="Address2" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="City" class="form-label">City</label>
+                    <input type="text" class="form-control" id="City" name="City" #userCity="ngModel"
+                        [(ngModel)]="model.city" required [class.is-invalid]="userCity.invalid && userCity.touched" />
+                    <p class="text-danger" [class.d-none]="userCity.valid || userCity.untouched">City cannot be
+                        blank</p>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="State" class="form-label">State</label>
+                    <select #userState="ngModel" required [(ngModel)]="model.state" id="State" class="form-select"
+                        name="State" required [class.is-invalid]="userState.touched && userState.invalid">
+                        <option selected value="">Choose...</option>
+                        <option [value]="state.abb" *ngFor="let state of states">
+                            {{ state.name }}
+                        </option>
+                    </select>
+                    <p class="text-danger" [class.d-none]="userState.untouched || userState.valid">
+                        Please select atleast one option
+                    </p>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="Zipcode" class="form-label">Zip</label>
+                    <input type="text" class="form-control" id="Zipcode" name="Zipcode" #userZip="ngModel" required
+                        [(ngModel)]="model.zip" [class.is-invalid]="userZip.invalid && userZip.touched" />
+                    <p class="text-danger" [class.d-none]="userZip.valid || userZip.untouched">Zipcode cannot be
+                        blank</p>
+                </div>
+                <div class="col-12 form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="OptinValue" name="OptinValue"
+                            #optin="ngModel" [(ngModel)]="model.checkBox" (click)="isCheckboxChecked(optin.value)"
+                            required [class.is-invalid]="isCheckboxChecked && optin.invalid && optin.touched" />
+                        <label class="form-check-label" for="OptinValue">
+                            Check me out
+                        </label>
+
+                        <p class="text-danger" [class.d-none]="!isCheckboxChecked || optin.valid || optin.untouched">
+                            Please check the check
+                            box</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" [disabled]="formData.invalid" class="btn btn-primary">Sign in</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

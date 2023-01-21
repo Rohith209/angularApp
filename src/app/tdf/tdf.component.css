@@ -1,0 +1,14 @@
+p {
+    font-family: Lato;
+}
+
+form {
+    max-width: 85%;
+    margin: 1rem auto;
+    border: 1px solid #ddd;
+    padding: 1rem 1.5rem;
+}
+
+label {
+    width: 100%;
+}
